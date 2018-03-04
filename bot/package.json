@@ -2,7 +2,31 @@
   "name": "MiaBot",
   "version": "0.0.1",
   "description": "Bot for the Crush Crush Discord",
-  "main": "bot.js",
-  "author": "graou13",
-  "dependencies": {winston, fs, sqlite3}
+  "readme": "../README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/graou13/CrushCrushBot"
+  },
+  "bugs": {
+    "url": "https://github.com/graou13/CrushCrushBot/issues"
+  },
+  "homepage": "https://github.com/graou13/CrushCrushBot#readme",
+  "keywords": [
+    "discord",
+    "bot",
+    "crushcrush",
+    "discordapp"
+  ],
+  "license": "MPL-2.0",
+  "main": "./src/bot.js",
+  "directories": {
+    "lib": "./lib",
+    "src": "./src"
+  },
+  "author": "graou13 <graou13@gmail.com>",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "sqlite": "^2.9.1",
+    "winston": "^2.4.0"
+  }
 }
