@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const logger = require('winston');
-const auth = require('../auth.json');
-const config = require('../config.json');
+const auth = require('./auth.json');
+const config = require('./config.json');
 const db = require("sqlite");
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -10,35 +10,40 @@ logger.add(logger.transports.Console, {
 });
 logger.level = 'debug';
 // Initialize Discord Bot
-db.open("../db.sqlite");
+db.open("./src/db.sqlite");
 const bot = new Discord.Client();
 
 bot.on('ready', () => {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.user.username + ' - (' + bot.user.id + ')');
-    logger.info('Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.');
+    logger.info('Bot has started, with ' + bot.users.size + ' users, in ' + bot.channels.size + ' channels of ' + bot.guilds.size + ' guilds.');
 });
 
 bot.on("message", async message => {
   if(message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
   
-  // Here we separate our "command" name, and our "arguments" for the command. 
-  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-  // command = say
-  // args = ["Is", "this", "the", "real", "life?"]
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
+  // const mods = ['307972360579842048', '307972393605791744', '307972240249716737']
+  // const admins = ['307972393605791744', '307972240249716737']
+  const mods = ['419991219230474253'];
+  const admins = ['419991219230474253'];
   
-  // Let's go with a few common example commands! Feel free to delete or change those.
-  
-  if(command === "ping") {
-    // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
-    // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-    const m = await message.channel.send("Ping?");
-    m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
+  switch (command) {
+    case 'modcmd':
+        if(!message.member.roles.some(r=>mods.includes(r.id)) )
+            return message.reply("Sorry, you don't have permissions to use this!");
+        await message.channel.send("mod power");
+        break;
+    case 'help':
+    default:
+        await message.channel.send("Help text \n\
+            multiline");
+        break;
   }
+
   /*
   if(command === "say") {
     // makes the bot say something and delete the message. As an example, it's open to anyone to use. 

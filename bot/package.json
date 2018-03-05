@@ -19,10 +19,6 @@
   ],
   "license": "MPL-2.0",
   "main": "./src/bot.js",
-  "directories": {
-    "lib": "./lib",
-    "src": "./src"
-  },
   "author": "graou13 <graou13@gmail.com>",
   "dependencies": {
     "discord.js": "^11.3.2",
