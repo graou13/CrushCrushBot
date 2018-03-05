@@ -1,4 +1,5 @@
 const help = require('./help.json');
+const utils = require('./util.js');
 const alias = 
 {
 	h: "help",
@@ -31,6 +32,28 @@ exports.execute = async function (message, args, command, db) {
 	}
 }
 
+
+_dic_.test = async function(message, args, db) {
+	var msg = "list of channels:";
+	let channels = await utils.get('channel', message, args);
+	for (let i = 0; i < channels.length; i++) {
+		let chan = channels[i];
+		msg += "\n  channel : <#" + chan + "> (" + chan + ")"; 
+	}
+	msg += "\nlist of options:";
+	let options = await utils.get('option', message, args);
+	for (let i = 0; i < options.length; i++) {
+		let opt = options[i];
+		msg += "\n  option : " + String(opt).match(/[a-z]/) + "=" + String(opt).match(/\d+/);
+	}
+	msg += "\nlist of expressions:";
+	let expressions = await utils.get('expression', message, args);
+	for (let i = 0; i < expressions.length; i++) {
+		let exp = expressions[i];
+		msg += "\n  expression : " + exp; 
+	}
+	await message.channel.send(msg);
+};
 _dic_.help = async function(message, args, db) {
 	//I should generate a nice presentation of the long command explanation if there's an arg or long help explanation if the arg is invalid or missing.
 	//also long help explanation will use short commands explanation

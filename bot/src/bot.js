@@ -21,7 +21,6 @@ bot.on('ready', () => {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.user.username + ' - (' + bot.user.id + ')');
-    logger.info('Bot has started, with ' + bot.users.length + ' users, in ' + bot.channels.length + ' channels of ' + bot.guilds.length + ' guilds.');
 });
 
 bot.on("message", async message => {
