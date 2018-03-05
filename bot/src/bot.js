@@ -4,6 +4,7 @@ const auth = require('./auth.json');
 const config = require('./config.json');
 const db = require('sqlite');
 const commands = require('./cmd.js');
+const treatment = require('./treat.js');
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -29,14 +30,12 @@ bot.on("message", async message => {
   
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  // const mods = ['307972360579842048', '307972393605791744', '307972240249716737']
-  // const admins = ['307972393605791744', '307972240249716737']
-  const mods = ['419991219230474253'];
-  const admins = ['419991219230474253'];
+  // mods and admins list transfered to config file, last elem of list = test role for my test server
 
   if (message.channel.type !== 'text') return; //don't answer to dms
 
-  commands.execute(message, args, command);
+  commands.execute(message, args, command, db);
+  treatment.treat(message, db);
 });
 
 
